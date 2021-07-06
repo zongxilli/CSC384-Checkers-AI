@@ -17,10 +17,10 @@ def get_util (state, color) :
         for i in range(len(state.board)) :
             for j in range(len(state.board[0])) :
                     
-                # not a king
+                # it is a PAWN
                 if state.board[i][j] == 'b' :
                     result += 1
-                # it is a king
+                # it is a KING
                 if state.board[i][j] == 'B' :
                     result += 2
                     
@@ -29,10 +29,10 @@ def get_util (state, color) :
         for i in range(len(state.board)) :
             for j in range(len(state.board[0])) :
                       
-                # not a king
+                # it is a PAWN
                 if state.board[i][j] == 'r' :
                     result += 1
-                # it is a king
+                # it is a KING
                 if state.board[i][j] == 'R' :
                     result += 2
                     
@@ -48,15 +48,15 @@ def get_better_util (state, color) :
         for i in range(len(state.board)) :
             for j in range(len(state.board[0])) :
                     
-                # not a king
+                # it is a PAWN
                 if state.board[i][j] == 'b' :
                     result += 1
                     # also beside boundary
                     if j == 0 or j == len(state.board) :
                         result += 1
-                # it is a king
+                # it is a KING
                 elif state.board[i][j] == 'B' :
-                    result += 4
+                    result += 3
                     # also beside boundary
                     if j == 0 or j == len(state.board) :
                         result += 1
@@ -66,19 +66,89 @@ def get_better_util (state, color) :
         for i in range(len(state.board)) :
             for j in range(len(state.board[0])) :
                       
-                # not a king
+                # it is a PAWN
                 if state.board[i][j] == 'r' :
                     result += 1
                     # also beside boundary
                     if j == 0 or j == len(state.board) :
                         result += 1
-                # it is a king
+                # it is a KING
                 elif state.board[i][j] == 'R' :
-                    result += 4
+                    result += 3
                     # also beside boundary
                     if j == 0 or j == len(state.board) :
                         result += 1
                     
+    return result
+
+
+def get_better_heuristic(state, color) :
+    
+    result = 0
+    
+    # color is black (PRE: BLACK PLAYER IS ALWAYS AT THE TOP OF THE BOARD)
+    if color == 'b' or color == 'B' :
+        for row in range(len(state.board)) :
+            for col in range(len(state.board[0])) :
+                
+                # it is a PAWN
+                if state.board[row][col] == 'b' :
+                    result += (5 + row + 1)
+                    # beside boundary
+                    if col == 0 or col == len(state.board[0]) - 1 :
+                        result += 1
+                    # or in the middle area (middle 4 columns & middle 2 rows) of board (take control of the middle is advantageous)
+                    elif col + 1 <= len(state.board[0]) * 0.75 and col + 1 >= len(state.board[0]) * 0.25 and row + 1 <= len(state.board) / 2 and row + 1 >= len(state.board) / 2 :
+                        result += 2
+                    # or in the back row (pieces at the back row can possiblely prevent opponent from getting a king and also prevent ours pieces from being taken)
+                    elif row == 0 :
+                        result += 1
+                
+                # it is a KING
+                elif state.board[row][col] == 'B' :
+                    result += 15
+                    # beside boundary
+                    if col == 0 or col == len(state.board[0]) - 1 :
+                        result += 1
+                    # or in the middle area (middle 4 columns & middle 2 rows) of board (take control of the middle is advantageous)
+                    elif col + 1 <= len(state.board[0]) * 0.75 and col + 1 >= len(state.board[0]) * 0.25 and row + 1 <= len(state.board) / 2 and row + 1 >= len(state.board) / 2 :
+                        result += 3
+                    # or in the back row (pieces at the back row can possiblely prevent opponent from getting a king and also prevent ours pieces from being taken)
+                    elif row == 0 :
+                        result += 0
+                        
+    
+    # color is red (PRE: BLACK PLAYER IS ALWAYS AT THE BOTTOM OF THE BOARD)
+    else :
+        for row in range(len(state.board)) :
+            for col in range(len(state.board[0])) :
+                
+                # it is a PAWN
+                if state.board[row][col] == 'r' :
+                    result += (5 + len(state.board) - row - 1)
+                    # beside boundary
+                    if col == 0 or col == len(state.board[0]) - 1 :
+                        result += 1
+                    # or in the middle area (middle 4 columns & middle 2 rows) of board (take control of the middle is advantageous)
+                    elif col + 1 <= len(state.board[0]) * 0.75 and col + 1 >= len(state.board[0]) * 0.25 and row + 1 <= len(state.board) / 2 and row + 1 >= len(state.board) / 2 :
+                        result += 2
+                    # or in the back row (pieces at the back row can possiblely prevent opponent from getting a king and also prevent ours pieces from being taken)
+                    elif row == len(state.board) - 1 :
+                        result += 1
+                    
+                # it is a KING
+                elif state.board[row][col] == 'R' :
+                    result += 15
+                    # beside boundary
+                    if col == 0 or col == len(state.board[0]) - 1 :
+                        result += 1
+                    # or in the middle area (middle 4 columns & middle 2 rows) of board (take control of the middle is advantageous)
+                    elif col + 1 <= len(state.board[0]) * 0.75 and col + 1 >= len(state.board[0]) * 0.25 and row + 1 <= len(state.board) / 2 and row + 1 >= len(state.board) / 2 :
+                        result += 3
+                    # or in the back row (pieces at the back row can possiblely prevent opponent from getting a king and also prevent ours pieces from being taken)
+                    elif row == len(state.board) - 1 :
+                        result += 0
+                        
     return result
 
 
@@ -130,13 +200,13 @@ def compute_utility(state, color):
 # Better heuristic value of board
 def compute_heuristic(state, color): 
     
-    user_util = get_better_util(state, color)
+    user_util = get_better_heuristic(state, color)
     opponent_util = 0
     
     if (color == 'b' or color =='B') :
-        opponent_util = get_better_util(state, 'r')
+        opponent_util = get_better_heuristic(state, 'r')
     else :
-        opponent_util = get_better_util(state, 'b')
+        opponent_util = get_better_heuristic(state, 'b')
     
     return (user_util - opponent_util)
         
@@ -244,6 +314,10 @@ def alphabeta_min_node(state, color, alpha, beta, limit, caching=0, ordering=0):
     if len(possible_states_of_moves) == 0 or is_game_over(state) or limit == 0 :
         return compute_utility(state, get_opponent_color(color)), state
     
+    # If we are ordering
+    if ordering :
+        possible_states_of_moves.sort(key = lambda x : compute_utility(x, color), reverse = False)
+    
     # Loop every possible state
     for next_state in possible_states_of_moves :
         
@@ -280,6 +354,10 @@ def alphabeta_max_node(state, color, alpha, beta, limit, caching=0, ordering=0):
     # Game is over or depth limit reached
     if len(possible_states_of_moves) == 0 or is_game_over(state) or limit == 0 :
         return compute_utility(state, color), state
+    
+    # If we are ordering
+    if ordering :
+        possible_states_of_moves.sort(key = lambda x : compute_utility(x, color), reverse = True)
 
     # Loop every possible state
     for next_state in possible_states_of_moves :
