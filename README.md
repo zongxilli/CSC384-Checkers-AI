@@ -3,7 +3,7 @@ University of Toronto CSC384(Introduction to Artificial Intelligence) Assignment
 
 Minimax Algorithm & Alpha-Beta Pruning (with state caching, depth limit, node ordering)
 
-# Introduction
+## Introduction
 Acknowledgements: This project is based on ones used in Columbia University’s Artificial Intelligence Course (COMS W4701) as well as the University of Pittsburgh's Artificial Intelligence Course (CS2710). Special thanks to Dr. Daniel Bauer and Dr. Janice Wiebe for sharing their code and their ideas on the assignment.
 
 Checkers is a 2-player board game that is played with distinct pieces that are typically black on one side and red on the other side, each side belonging to one player. Our version of the game is played on an 8x8 chess board, which is standard. Players (red and black) take turns moving pieces on the board.
@@ -22,7 +22,7 @@ When one of the pieces reaches the last row of the board (or the first row from 
 
 We recommend that you start this assignment by playing some games of checkers to develop a better understanding of how the game works and what strategies can give you an advantage.  An online version of the game that allows you to compete against an AI can be found at this link. (Links to an external site.)
 
-# Starter Code
+## Starter Code
 The starter code contains 6 files. You can download all the code and supporting files as a Zipped file archive.  In that archive you will find the following files:
 
 Files you can use to test your solution:
@@ -61,7 +61,7 @@ The GUI is rather minimalistic, so you need to close the window and then restart
 
 Time Constraints: When we test your AI player, we will be expecting it to make a move within 10 seconds. If no move has been selected, the AI will lose the game. 
 
-# Mark Breakdown
+## Mark Breakdown
 ### Minimax [30 pts]
 
 The first thing you will do is to write a function compute utility(state, color) that computes the utility of a final game board state.  Note that state will be an object of type Board; to access the board as a list of lists you will want to evaluate the board attribute of that state (i.e. state.board which will be in the format described above). The utility should be based on the number of pieces of the player's colour minus the number of pieces of the opponent. Make each regular piece worth one point and each king worth 2.  If your agent has a single king and six regular pieces, assign this a value of 2*1 + 6 = 8.  If your agent's opponent has two kings and 3 regular pieces, assign this a value of 2*2 + 3 = 7 points.  The difference in points between agents, and the result of compute_utility, will therefore be 8-7 = 1.
@@ -127,7 +127,7 @@ $driver agent agent -d 6 -a -c -o
 
 You will run your agent against itself using alpha-beta with a depth limit of 6 and both caching and node ordering ON. 
 
-# Checkers Competition (Optional)
+## Checkers Competition (Optional)
 If you want, you can enter your agent in the CSC384 Checkers competition. The finalists and the winners of the competition will receive a shout-out on the course website. We are planning to run most of the competition after the last day of class. A tentative plan is to run the competition in a league format on an 8x8 board and a time constraint of 10 seconds.
 
 To submit an AI to the competition, simply include the file agent_competition.py with your homework submission. You can restructure the code in your submission as you please as this file will not be marked. 
@@ -151,7 +151,7 @@ By improving the efficiency of simulation, the algorithm should yield a better e
 UCB plays an important role in the selection stage. You may want to explore enhanced versions of UCB to further improve performance.
 Pruning sub-optimal moves from the search tree is also a feasible way to reduce complexity. The easiest way is to use expert knowledge to identify and exclude unattractive branches.
 You are welcome to choose any of the above directions to explore or you are free to come up with your own ideas. You can use external libraries in this part of the assignment, assuming they are installed on teach.cs. However, do not include any number of search trees directly in your submission. Parallel processing and GPU acceleration are also prohibited.
-# What to Submit
+## What to Submit
 You will be using MarkUs to submit your assignment. You will submit two files (one of which is optional):
 
 Your modified agent.py
