@@ -3,6 +3,8 @@ University of Toronto CSC384(Introduction to Artificial Intelligence) Assignment
 
 Minimax Algorithm & Alpha-Beta Pruning (with state caching, depth limit, node ordering)
 
+# Introduction
+Acknowledgements: This project is based on ones used in Columbia University’s Artificial Intelligence Course (COMS W4701) as well as the University of Pittsburgh's Artificial Intelligence Course (CS2710). Special thanks to Dr. Daniel Bauer and Dr. Janice Wiebe for sharing their code and their ideas on the assignment.
 
 Checkers is a 2-player board game that is played with distinct pieces that are typically black on one side and red on the other side, each side belonging to one player. Our version of the game is played on an 8x8 chess board, which is standard. Players (red and black) take turns moving pieces on the board.
 
@@ -20,7 +22,7 @@ When one of the pieces reaches the last row of the board (or the first row from 
 
 We recommend that you start this assignment by playing some games of checkers to develop a better understanding of how the game works and what strategies can give you an advantage.  An online version of the game that allows you to compete against an AI can be found at this link. (Links to an external site.)
 
-Starter Code
+# Starter Code
 The starter code contains 6 files. You can download all the code and supporting files as a Zipped file archive.  In that archive you will find the following files:
 
 Files you can use to test your solution:
@@ -59,8 +61,8 @@ The GUI is rather minimalistic, so you need to close the window and then restart
 
 Time Constraints: When we test your AI player, we will be expecting it to make a move within 10 seconds. If no move has been selected, the AI will lose the game. 
 
-Mark Breakdown
-Minimax [30 pts]
+# Mark Breakdown
+### Minimax [30 pts]
 
 The first thing you will do is to write a function compute utility(state, color) that computes the utility of a final game board state.  Note that state will be an object of type Board; to access the board as a list of lists you will want to evaluate the board attribute of that state (i.e. state.board which will be in the format described above). The utility should be based on the number of pieces of the player's colour minus the number of pieces of the opponent. Make each regular piece worth one point and each king worth 2.  If your agent has a single king and six regular pieces, assign this a value of 2*1 + 6 = 8.  If your agent's opponent has two kings and 3 regular pieces, assign this a value of 2*2 + 3 = 7 points.  The difference in points between agents, and the result of compute_utility, will therefore be 8-7 = 1.
 
@@ -70,7 +72,7 @@ Hints: Use the successors(state,player) function in checkers_game.py, which retu
 
 While you can test some of the functions in your MINIMAX algorithm using the autograder, if you try to run it with driver.py you may end up with a stack overflow! This is because the game of checkers is large.  We will have to implement a depth limit to realize an agent that can operate in a tractable amount of time and memory.
 
-Depth Limit [10 pts]
+### Depth Limit [10 pts]
 
 To make your agent really functional, you must implement a depth limit. Your starter code is structured to do this by using the '-d' flag at the command line. For example, if you type
 
@@ -81,7 +83,7 @@ Change your Minimax code to recursively send the ’limit’ parameter to both m
 
 What is the largest depth limit you can play without needing more than 10 seconds per move?
 
-Alpha-Beta Pruning [30 pts]
+### Alpha-Beta Pruning [30 pts]
 
 The simple minimax approach is quite slow. To ameliorate this we will write the function select_move_alphabeta(state, color, limit=5, caching=0, ordering=0) to compute the best move using alpha-beta pruning. The parameters and return values will be the same as for minimax. You can ignore the caching, and ordering parameters that the function will also accept for the time being; we will return to these later. Much like Minimax, your alpha-beta implementation should recursively call two helper functions: alphabeta_min_node(state, color, alpha, beta, limit, caching=0, ordering=0)  and alphabeta_max_node(state, color, alpha, beta, limit, caching=0, ordering=0). As with Minimax, recursively sends the ’limit’ parameter to alphabeta_min_node and alphabeta_max_node. When you arrive at your depth limit, call compute_utility to generate a utility value for each given state.
 
@@ -92,7 +94,7 @@ to play against your agent using the ALPHA-BETA algorithm with a depth limit of 
 
 What is the largest depth limit you can play without needing more than 10 seconds per move?
 
-Caching States [10 pts]
+### Caching States [10 pts]
 
 We can try to speed up the AI even more by caching states we’ve seen before. To do this, we will want to alter your program so that it responds to the -c flag at the command line. To implement state caching you will need to create a dictionary in your AI player (this can just be stored in a global variable on the top level of the file) that maps board states to their Minimax value, or that checks values against stored alpha and beta parameters. Modify your Minimax and alpha-beta pruning functions to store states in that dictionary after their value is known. Then check the dictionary at the beginning of each function. If a state is already in the dictionary and do not explore it again. The starter code is structured so that if you type
 
@@ -115,7 +117,7 @@ You can also do your own research to find a wide range of other good heuristics 
 
 In addition to engineering your own heuristic, please include a (short) description that details your heuristic as a comment at the start of your solution file.
 
-Node Ordering Heuristic [10 pts]
+### Node Ordering Heuristic [10 pts]
 
 Finally, note that alpha-beta pruning works better if nodes that lead to a better utility are explored first. To do this, in the Alpha-beta pruning functions, try using your heuristic to order the nodes that you explore.  If your heuristic makes reasonably good estimates of non-terminal state values, this should lead to a little bit of a speed up because a good ordering will lead to more pruning.  Note that you can use your own heuristic to order nodes when you submit your code.  Use compute_utility to assess values of nodes when you hit the depth limit, however.
 
@@ -124,3 +126,34 @@ To run your code with node ordering, use the -o flag.  More specifically if you 
 $driver agent agent -d 6 -a -c -o
 
 You will run your agent against itself using alpha-beta with a depth limit of 6 and both caching and node ordering ON. 
+
+# Checkers Competition (Optional)
+If you want, you can enter your agent in the CSC384 Checkers competition. The finalists and the winners of the competition will receive a shout-out on the course website. We are planning to run most of the competition after the last day of class. A tentative plan is to run the competition in a league format on an 8x8 board and a time constraint of 10 seconds.
+
+To submit an AI to the competition, simply include the file agent_competition.py with your homework submission. You can restructure the code in your submission as you please as this file will not be marked. 
+
+If you like, you can explore other gaming algorithms like Monte Carlo Tree Search (MCTS) as you develop your game agent for competition. MCTS was initially created for Go in 2006. Many tools and applications have been based on this algorithm, including AlphaGo. This is the most advanced Go AI to date and it was developed by Deepmind. MCTS provided a foundation for AlphaGo, which was augmented by complex neural networks. In this competition, you can implement a basic Monte Carlo Tree Search algorithm and attempt to improve on it.
+
+To help you, we provide an overview of MCTS. There are four stages in each iteration of the algorithm that are detailed below. MCTS will iterate through each of these four stages while time allows:
+
+Selection: This step builds a game tree with the current board as the initial state S0. The child with the highest probability of winning is then selected. We suggest that by default you use the Upper Confidence Bound (UCB) statistic to select the child with the highest probability of winning.
+Expansion: After selecting a child state, S1, we must determine if it is a terminal state. (the get possible moves(board, color) function returns an empty result at a terminal state). If the state is a non-terminal state, it will be expanded.
+Simulation: We don’t know the consequence of selecting this state. To estimate the potential benefit to be derived from the state, we will simulate gameplay from that state. To do that, randomly assign the moves to generate subsequent states until a terminal state is reached. (For instance, beginning from S1, randomly make moves for both players until the game ends. If we win, make note of the fact that we have derived a reward of 1; otherwise, we have derived a reward of 0.
+Backpropagation: Once we finish any simulation, we need to update the simulation results with information about the reward that was derived from the simulation. To do this, rewards found at terminals will be back-propagated through parent nodes. The information must be updated at every ancestor of the terminal, one by one, until reaching the root (i.e the initial state, S0 ).
+Once time runs out, MCTS can select the move associated with the most simulations or highest average payoff.
+
+The agent_competition.py file also includes some MCTS function stubs to get you started, in case you would like to use these (you don't have to)!
+
+The MCTS we introduced in this class is a ’vanilla’ version that makes use of UCB. However, there are many improvements you can add to make this algorithm perform better. For example, the simulation stage detailed above is purely random. This makes MCTS generalize to other games but at the cost of high variance. It can take a very long time to compute a reliable result.
+
+To address this issue directly, you can generate non-random moves during your simulations using heuristic functions. More specifically, you can create a heuristic function using expert knowledge, or you can explore training a heuristic based on previous games.
+By improving the efficiency of simulation, the algorithm should yield a better estimation of states more quickly. See this paper for more information: https://doi.org/10.1145/1273496.1273531 (Links to an external site.)
+UCB plays an important role in the selection stage. You may want to explore enhanced versions of UCB to further improve performance.
+Pruning sub-optimal moves from the search tree is also a feasible way to reduce complexity. The easiest way is to use expert knowledge to identify and exclude unattractive branches.
+You are welcome to choose any of the above directions to explore or you are free to come up with your own ideas. You can use external libraries in this part of the assignment, assuming they are installed on teach.cs. However, do not include any number of search trees directly in your submission. Parallel processing and GPU acceleration are also prohibited.
+# What to Submit
+You will be using MarkUs to submit your assignment. You will submit two files (one of which is optional):
+
+Your modified agent.py
+Your modified agent_competition.py (optional)
+Note that while the assignment is due on July 6, we will continue to accept agents for competition until August 10 at Midnight! 
