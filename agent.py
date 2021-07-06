@@ -241,11 +241,7 @@ def alphabeta_min_node(state, color, alpha, beta, limit, caching=0, ordering=0):
         return cache[(state, color)]
     
     # Game is over
-    if len(possible_states_of_moves) == 0 or is_game_over(state) :
-        return compute_utility(state, color), state
-    
-    # Depth limit reached
-    if limit == 0 :
+    if len(possible_states_of_moves) == 0 or is_game_over(state) or limit == 0 :
         return compute_utility(state, get_opponent_color(color)), state
     
     # Loop every possible state
