@@ -172,7 +172,7 @@ def minimax_min_node(state, color, limit, caching=0):
     
     # If we are caching, we need to record the best move and its utility        
     if caching :
-        cache[(state_of_BEST_move, color)] = minimum_utility
+        cache[(state, color)] = minimum_utility, state_of_BEST_move
     
     return minimum_utility, state_of_BEST_move
 
@@ -205,7 +205,7 @@ def minimax_max_node(state, color, limit, caching=0):
     
     # If we are caching, we need to record the best move and its utility      
     if caching :
-        cache[(state_of_BEST_move, color)] = maximum_utility
+        cache[(state, color)] = maximum_utility, state_of_BEST_move
     
     return maximum_utility, state_of_BEST_move
 
@@ -266,7 +266,7 @@ def alphabeta_min_node(state, color, alpha, beta, limit, caching=0, ordering=0):
         
     # If we are caching, we need to record the best move and its utility        
     if caching :
-        cache[(state_of_BEST_move, color)] = minimum_utility
+        cache[(state, color)] = minimum_utility, state_of_BEST_move
     
     return minimum_utility, state_of_BEST_move
         
@@ -303,7 +303,7 @@ def alphabeta_max_node(state, color, alpha, beta, limit, caching=0, ordering=0):
             
     # If we are caching, we need to record the best move and its utility      
     if caching :
-        cache[(state_of_BEST_move, color)] = maximum_utility
+        cache[(state, color)] = maximum_utility, state_of_BEST_move
     
     return maximum_utility, state_of_BEST_move
             
