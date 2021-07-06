@@ -1,10 +1,10 @@
-
-
 # You can use the functions to write your AI for competition
 from __future__ import nested_scopes
 from checkers_game import *
 from agent import *
 from driver import *
+
+cache = {}
 
 import random
 import sys
@@ -92,7 +92,7 @@ def alphabeta_max_node(state, color, alpha, beta, limit, caching=0, ordering=0):
     return maximum_utility, state_of_BEST_move
             
 
-def select_move_alphabeta(state, color, limit, caching=0, ordering=0):
+def select_move_alphabeta(state, color, limit, caching=1, ordering=1):
     """
     Given a state (of type Board) and a player color, decide on a move. 
     The return value is a list of tuples [(i1,j1), (i2,j2)], where

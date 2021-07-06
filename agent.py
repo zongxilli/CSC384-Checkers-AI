@@ -99,7 +99,7 @@ def get_better_heuristic(state, color) :
                         result += 1
                     # or in the middle area (middle 4 columns & middle 2 rows) of board (take control of the middle is advantageous)
                     elif col + 1 <= len(state.board[0]) * 0.75 and col + 1 >= len(state.board[0]) * 0.25 and row + 1 <= len(state.board) / 2 and row + 1 >= len(state.board) / 2 :
-                        result += 2
+                        result += 1
                     # or in the back row (pieces at the back row can possiblely prevent opponent from getting a king and also prevent ours pieces from being taken)
                     elif row == 0 :
                         result += 1
@@ -112,7 +112,7 @@ def get_better_heuristic(state, color) :
                         result += 1
                     # or in the middle area (middle 4 columns & middle 2 rows) of board (take control of the middle is advantageous)
                     elif col + 1 <= len(state.board[0]) * 0.75 and col + 1 >= len(state.board[0]) * 0.25 and row + 1 <= len(state.board) / 2 and row + 1 >= len(state.board) / 2 :
-                        result += 3
+                        result += 4
                     # or in the back row (pieces at the back row can possiblely prevent opponent from getting a king and also prevent ours pieces from being taken)
                     elif row == 0 :
                         result += 0
@@ -131,7 +131,7 @@ def get_better_heuristic(state, color) :
                         result += 1
                     # or in the middle area (middle 4 columns & middle 2 rows) of board (take control of the middle is advantageous)
                     elif col + 1 <= len(state.board[0]) * 0.75 and col + 1 >= len(state.board[0]) * 0.25 and row + 1 <= len(state.board) / 2 and row + 1 >= len(state.board) / 2 :
-                        result += 2
+                        result += 1
                     # or in the back row (pieces at the back row can possiblely prevent opponent from getting a king and also prevent ours pieces from being taken)
                     elif row == len(state.board) - 1 :
                         result += 1
@@ -144,7 +144,7 @@ def get_better_heuristic(state, color) :
                         result += 1
                     # or in the middle area (middle 4 columns & middle 2 rows) of board (take control of the middle is advantageous)
                     elif col + 1 <= len(state.board[0]) * 0.75 and col + 1 >= len(state.board[0]) * 0.25 and row + 1 <= len(state.board) / 2 and row + 1 >= len(state.board) / 2 :
-                        result += 3
+                        result += 4
                     # or in the back row (pieces at the back row can possiblely prevent opponent from getting a king and also prevent ours pieces from being taken)
                     elif row == len(state.board) - 1 :
                         result += 0
