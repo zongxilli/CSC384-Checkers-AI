@@ -314,9 +314,9 @@ def alphabeta_min_node(state, color, alpha, beta, limit, caching=0, ordering=0):
     if len(possible_states_of_moves) == 0 or is_game_over(state) or limit == 0 :
         return compute_utility(state, get_opponent_color(color)), state
     
-    # If we are ordering
+    # If we are ordering => use our better heuristic instead of utility to order it
     if ordering :
-        possible_states_of_moves.sort(key = lambda x : compute_utility(x, color), reverse = False)
+        possible_states_of_moves.sort(key = lambda x : compute_heuristic(x, color), reverse = False)
     
     # Loop every possible state
     for next_state in possible_states_of_moves :
@@ -355,9 +355,9 @@ def alphabeta_max_node(state, color, alpha, beta, limit, caching=0, ordering=0):
     if len(possible_states_of_moves) == 0 or is_game_over(state) or limit == 0 :
         return compute_utility(state, color), state
     
-    # If we are ordering
+    # If we are ordering => use our better heuristic instead of utility to order it
     if ordering :
-        possible_states_of_moves.sort(key = lambda x : compute_utility(x, color), reverse = True)
+        possible_states_of_moves.sort(key = lambda x : compute_heuristic(x, color), reverse = True)
 
     # Loop every possible state
     for next_state in possible_states_of_moves :
