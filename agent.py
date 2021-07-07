@@ -39,6 +39,7 @@ def get_util (state, color) :
     return result
 
 
+#! DOES NOT USED
 def get_better_util (state, color) :
     
     result = 0
@@ -174,14 +175,8 @@ def get_opponent_color(color) :
         return 'r'
     
     return 'b'
-    
-    
-        
 
 #= ----------------------------------------------------------------------------------
-
-
-
 
 # Method to compute utility value of terminal state
 def compute_utility(state, color):
@@ -211,8 +206,6 @@ def compute_heuristic(state, color):
     return (user_util - opponent_util)
         
     
-
-
 ############ MINIMAX ###############################
 def minimax_min_node(state, color, limit, caching=0):
     
